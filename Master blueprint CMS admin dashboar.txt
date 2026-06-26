@@ -1,0 +1,404 @@
+Master blueprint: CMS admin dashboard (domain-agnostic)
+This project is a single-page React app with a public marketing site and an embedded admin CMS at /admin. The pattern is portable: swap table names and fields, keep the architecture.
+
+1. Technology stack
+Layer	Choice	Role
+Frontend
+React 19 + TypeScript
+UI
+Build
+Vite 8
+Dev server, bundling
+Routing
+React Router v7
+Public routes + nested /admin/*
+Styling
+Tailwind CSS v4 + custom admin-theme.css
+Layout, responsive admin UI
+UI primitives
+Radix UI + shadcn-style utilities (clsx, cva, tailwind-merge)
+Buttons, dialogs where used
+Icons
+Lucide React
+Nav and actions
+Backend / DB / Auth
+Supabase (Postgres + Auth + Storage + Edge Functions)
+All live data
+DB client
+@supabase/supabase-js
+Typed queries from the browser
+Rich text
+TipTap (@tiptap/react, StarterKit, Link, Placeholder)
+HTML fields in forms
+Maps / carousel (public site only)
+Leaflet, Embla
+Not required for admin pattern
+Environment
+
+VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY in .env
+Optional VITE_ROUTER_MODE=hash for static hosting
+No separate admin API server for CRUD: the browser talks to Supabase directly (secured by Row Level Security on the database — policies live in Supabase, not in this repo).
+
+2. High-level architecture
+Browser SPA
+Supabase
+loadCmsSnapshot
+select/insert/update/delete/upsert
+upload
+create user / set password
+Public pages
+Admin /admin/*
+CmsContext - public data cache
+AdminAuthContext - Supabase session
+Auth - email/password
+Postgres tables
+Storage bucket cms-media
+Edge Functions - privileged ops
+Two data paths
+
+Public site — CmsProvider loads a snapshot of published content (loadCmsSnapshot) into React context. Falls back to bundled static JSON if Supabase is off or empty.
+Admin — Each screen loads its own table(s) with getSupabase().from('table'), mutates rows, then often calls refetch() on CmsContext so the public site updates without redeploy.
+Admin routes skip the heavy CMS fetch (pathname.startsWith('/admin')) to avoid wasted work.
+
+3. Routing and layout shell
+Route tree (App.tsx pattern):
+
+/admin/login          → public login (no shell)
+/admin                → protected layout
+  ├─ index            → dashboard (counts + recent inbox)
+  ├─ {module}         → one React page per content domain
+  └─ {group}/*         → optional nested layout + sub-nav
+Protection (AdminLayout.tsx):
+
+If Supabase not configured → blocking message.
+If loading → spinner.
+If no session → redirect to /admin/login with state.from for return URL.
+Else → AdminShell + <Outlet /> for child routes.
+Shell (AdminShell.tsx):
+
+Fixed sidebar nav (collapsible drawer on mobile).
+Header with scroll progress bar.
+Role-based nav filtering (e.g. editor hides User management + Integrations).
+Brand theming via CSS variables from site_settings (--admin-primary, --admin-surface, --admin-radius-lg).
+AdminDropdownPortalHost so dropdowns render above modals.
+Nested section example — AdminPropertiesLayout: horizontal sub-tabs + <Outlet /> for related entities under one menu item (listings + taxonomies + shortcuts).
+
+4. Authentication and authorization
+Auth (who can open /admin)
+AdminAuthProvider wraps the app in main.tsx.
+signInWithPassword / signOut via Supabase Auth.
+Session persisted in browser; onAuthStateChange keeps UI in sync.
+Authorization (what they can do)
+App-level (UI only):
+
+admin_users table: role ∈ owner | admin | editor | viewer, is_active, linked by auth_user_id or email.
+Shell hides nav items for editor.
+First login can auto-insert an owner row (AdminUsers.ensureCurrentUserRecord).
+Server-level (real security):
+
+Postgres RLS must allow authenticated admins to read/write CMS tables.
+Edge Function admin-user-auth: uses service role to createUser / setPassword only if caller is owner or admin in admin_users.
+Privileged actions never use the anon key alone — they call the edge function with the user’s JWT in Authorization: Bearer ….
+
+5. Database model (generic patterns)
+Map this project’s tables to your domain:
+
+Pattern	Example table(s) here	Your equivalent
+Primary catalog
+properties
+products, listings, courses, …
+Taxonomy / lookups
+property_listing_tags, property_type_options, uae_emirates
+tags, categories, regions
+Related party
+salespeople
+staff, authors, agents
+Structured content
+articles, faq_topics + faq_entries
+blog + FAQ
+Marketing blocks
+experiences, testimonials, campaign_popups
+features, reviews, modals
+Static pages
+marketing_pages
+pages
+Hero / nav shortcuts
+hero_neighbourhoods
+featured_links
+Key-value config
+site_settings (key, value)
+branding, integrations, feature flags
+Media index
+cms_media + Storage bucket
+asset library
+Inbound (read-heavy)
+form_submissions
+leads, contact_requests
+Admin RBAC
+admin_users
+same
+Recurring column conventions
+
+id (UUID, client-generated with crypto.randomUUID() on create)
+slug (URL-safe, validated with regex)
+sort_order (manual ordering in admin tables)
+published / active / status (public visibility or workflow)
+created_at / updated_at
+Rich content: description_html, body_html, JSON (gallery, sections, toc, meta)
+Type safety
+
+database.types.ts generated/ maintained from Supabase schema.
+Each admin page: type Row = Database['public']['Tables']['your_table']['Row'].
+6. Public site ↔ admin contract
+Snapshot loader
+loadCmsSnapshot(supabase):
+
+Parallel select queries for all public-facing entities.
+Filters: published = true, approved statuses, etc.
+Mapper functions per entity (mapProperty, mapArticle, buildFaqSections) turn DB rows into view models used by React components.
+CmsContext
+Holds normalized state: lists, maps by slug/id, siteSettings.
+mode: 'static' | 'live'.
+refetch() after admin saves so the storefront updates immediately.
+cmsEmpty flag when DB has no published primary catalog yet.
+Rule for your developer: every admin write that affects the public site should call refetchCms() from useCms() after success (same pattern as AdminFaqs).
+
+7. The reusable CRUD module pattern
+Almost every admin screen is a copy of the same recipe. Give your developer this checklist per entity.
+
+State shape (per module)
+// Data
+rows: Row[]
+err: string | null
+// Create/Edit modal
+modalOpen: boolean
+draft: Partial<Row> | null
+saveErr: string | null
+step: number                    // optional multi-step wizard
+// Delete
+deleteId: string | null         // confirm modal
+// Table UX
+selectedIds: Set<string>
+bulkDeleteOpen: boolean
+bulkBusy: boolean
+filters...                      // optional
+// Read-only detail (inbox-style)
+viewRow: Row | null             // opens EntityDetailSheet
+Lifecycle functions
+Function	Responsibility
+refresh()
+select('*').order(...) → setRows
+openCreate()
+draft = emptyRow() with new UUID
+openEdit(row)
+draft = { ...row }
+save()
+Validate → upsert or insert/update → close modal → refresh() + refetchCms()
+confirmDelete()
+.delete().eq('id', id) → refresh()
+Bulk ops
+.delete().in('id', [...]) or batch .update()
+Persistence API usage
+const sb = getSupabase()
+if (!sb) return
+// Create or update one row
+await sb.from('entities').upsert(row, { onConflict: 'id' })
+// Delete
+await sb.from('entities').delete().eq('id', id)
+// List
+const { data, error } = await sb.from('entities').select('*').order('sort_order')
+Client-side validation runs before the request (required fields, slug regex, etc.). DB errors surface in saveErr / err.
+
+UI composition (standard layout)
+AdminPageHeading — title + optional help popover.
+Toolbar — “Add”, filters, bulk actions.
+Responsive table — overflow-x-auto, checkbox column, row actions (view / edit / delete).
+useAdminTablePagination — 20 rows/page, client-side slice.
+AdminModal — create/edit form (footer with Save / Cancel).
+Second AdminModal or inline confirm — delete confirmation.
+EntityDetailSheet — read-only drill-down (mobile: bottom sheet; desktop: right drawer).
+Multi-step forms
+Used when the form is long (entrySteps, property wizard):
+
+Step tabs using adminStepActive / adminStepInactive.
+“Next” validates current step only; “Save” on last step.
+Parent–child entities
+FAQs pattern (generic Category + Items):
+
+Two tables: faq_topics + faq_entries with topic_id FK.
+One page manages both with two modals and topic filter on the child table.
+Deleting a parent may need cascade rules in DB or app.
+8. Shared admin components (build once, reuse everywhere)
+Component	Purpose
+AdminModal
+Dialog; mobile bottom sheet; scroll progress; backdrop close
+EntityDetailSheet
+Read-only details; 2 close paths (X + footer button)
+AdminTablePagination
+Page controls wired to hook
+AdminPageHeading
+Consistent page title
+ImageUploadField
+File pick → Storage upload → URL; paste URL; media library picker
+VideoUploadField
+Same for video
+MediaPickerModal
+Browse cms_media
+AdminRichTextField
+TipTap → HTML string
+AdminSearchableTerracottaDropdown
+FK picker (e.g. assign staff to item)
+adminClassNames.ts
+Shared button/nav/select classes tied to CSS variables
+Media pipeline
+
+Upload file to Supabase Storage (cms-media bucket, path {folder}/{timestamp}-{safeName}).
+Insert row in cms_media with public_url, folder, kind, metadata.
+On DB insert failure, remove the storage object (rollback).
+Forms store the public URL on the entity row.
+9. Module catalog (what each screen does)
+Use this as a menu template — rename for any industry:
+
+Admin route	Generic purpose	CRUD style
+/admin
+Dashboard counts + recent inbox
+Read aggregates
+/admin/{catalog}
+Main inventory CRUD
+Full CRUD + bulk + rich form
+/admin/{catalog}/*
+Sub-entities & lookups
+Simple CRUD tables
+/admin/articles
+Long-form content
+CRUD + JSON sections + rich text
+/admin/faqs
+Categories + Q&A
+Dual-entity CRUD
+/admin/testimonials
+UGC with moderation
+CRUD + status workflow
+/admin/experiences
+Feature/service cards
+CRUD + image/video
+/admin/media
+Asset library
+List/delete + upload
+/admin/submissions
+Form leads
+Read + delete + CSV export
+/admin/{team}
+People profiles
+CRUD + image
+/admin/users
+Admin accounts + roles
+CRUD + edge function for passwords
+/admin/marketing
+Editable static pages
+CRUD per slug
+/admin/campaign-popups
+On-site modals
+CRUD + trigger rules
+/admin/integrations
+API keys, sync, branding
+Key-value site_settings
+/admin/site
+Global site config
+Key-value updates
+Complex catalog module (here: listings) also includes:
+
+FK dropdowns (staff, brand, taxonomies).
+Gallery as JSON array built from 6 image slots.
+published toggle, home-page placement fields.
+Optional external sync (edge function) — treat as integration, not core CRUD.
+10. Cross-cutting UX rules (already implemented)
+Your user rules align with what the code does:
+
+Mobile: sidebar overlay; modals slide from bottom (marginBottom: 0); tables scroll horizontally.
+Dialogs: backdrop click + header X close; long forms use steps.
+Validation: required fields, slug format, trim strings before save.
+Bulk: checkbox column, bulk delete confirm modal, bulk update (e.g. move FAQ entries to another topic).
+Theming: admin reads brand colors from site_settings; dispatch capitaldream-admin-brand-updated after Integrations save to refresh shell.
+11. Edge functions (when browser is not enough)
+Function	When to use
+admin-user-auth
+Create auth users, reset passwords (service role)
+sync-*
+Pull from third-party APIs, write many rows, store sync metadata in site_settings
+Template for new privileged endpoints:
+
+Verify JWT with service client auth.getUser(jwt).
+Check admin_users.role + is_active.
+Perform operation with service role.
+Return JSON { ok, error? } with CORS headers.
+12. Implementation playbook for your developer
+Phase A — Foundation
+Create Supabase project; define tables using the patterns in §5.
+Enable RLS: public read on published rows; authenticated admin write policies.
+Generate database.types.ts.
+Add getSupabase(), AdminAuthProvider, /admin/login, AdminLayout, AdminShell.
+Register routes in App.tsx.
+Phase B — One reference CRUD module
+Pick the simplest entity (e.g. a categories table) and implement:
+
+refresh / openCreate / openEdit / save / delete
+Table + pagination + AdminModal
+Call refetchCms() if public site uses it
+Use AdminFaqs.tsx or AdminUsers.tsx as the canonical template (smaller than the full catalog module).
+
+Phase C — Public consumption
+Implement loadXSnapshot() + mappers.
+Wire CmsProvider on public routes only.
+Verify: edit in admin → refetch → public page updates.
+Phase D — Media + rich content
+Storage bucket + cms_media table.
+ImageUploadField + media library page.
+TipTap for HTML fields.
+Phase E — Remaining modules
+Clone the Phase B module per table; add nested layouts where entities are grouped.
+
+Phase F — RBAC + edge functions
+admin_users + role-based nav.
+Edge function for any action that must not use the anon key.
+13. File structure to replicate
+src/
+  integrations/supabase/
+    client.ts              # singleton Supabase client
+    database.types.ts      # generated types
+  contexts/
+    AdminAuthContext.tsx   # session
+    CmsContext.tsx         # public snapshot + refetch
+  lib/cms/
+    loadCmsSnapshot.ts     # aggregate public queries
+    map*.ts                # row → view model
+    uploadCmsImage.ts      # storage + cms_media
+    integrationSettingsKeys.ts
+  admin/
+    AdminLayout.tsx        # auth gate
+    AdminShell.tsx         # nav + chrome
+    AdminLogin.tsx
+    AdminDashboard.tsx
+    Admin{Entity}.tsx        # one per module
+    Admin{Group}Layout.tsx   # optional nested nav
+    adminClassNames.ts
+    admin-theme.css
+    useAdminTablePagination.ts
+    components/
+      AdminModal.tsx
+      EntityDetailSheet.tsx
+      AdminTablePagination.tsx
+      ImageUploadField.tsx
+      AdminRichTextField.tsx
+      ...
+  App.tsx                  # route map
+supabase/functions/
+  admin-user-auth/         # privileged auth ops
+14. What is not in this stack (decisions for other projects)
+No Next.js / no SSR admin — pure SPA; SEO is on public pages only.
+No Redux/React Query — local useState + manual refresh() per screen.
+No server-side admin API — Supabase client + RLS (+ edge for exceptions).
+Pagination is client-side — fine until ~few thousand rows; then add server-side range().
+15. One-paragraph brief you can paste to a developer
+Build a React + Vite SPA with React Router. Use Supabase for Postgres, Auth (email/password), and Storage. Protect /admin/* with a session gate; store admin roles in an admin_users table. Each CMS entity gets one admin page following the same pattern: load rows with select, table with client pagination, create/edit in AdminModal, delete confirm, optional bulk actions, optional multi-step forms for large entities. Map DB rows to public view models in loadCmsSnapshot and expose via React context; call refetch() after every write. Upload assets to Storage and index them in cms_media. Use TipTap for HTML fields. Put privileged operations (user creation, external sync) in Supabase Edge Functions verified by JWT + role. Style the admin with Tailwind and CSS variables loaded from a site_settings key-value table.
+
+If you want, I can turn this into a checklist doc in the repo (docs/admin-cms-blueprint.md) or a blank AdminEntityTemplate.tsx your team copies for each new table.

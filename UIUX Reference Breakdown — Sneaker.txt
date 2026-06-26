@@ -1,0 +1,1097 @@
+UI/UX Reference Breakdown — Sneaker eCommerce Landing Page
+1. Project Manager Perspective
+Product Type
+
+This is a fashion/sneaker eCommerce landing page designed to sell curated footwear collections with a strong lifestyle/editorial feel.
+
+The page should feel like a mix of:
+
+Premium sneaker store
+Editorial fashion catalogue
+Lifestyle lookbook
+Direct-to-consumer product shop
+
+The main objective is to move users from brand discovery → product interest → product browsing → purchase action.
+
+Page Purpose
+
+The page is built to:
+
+Introduce the sneaker brand with a strong hero campaign.
+Promote featured style categories.
+Display product collections with pricing.
+Recommend curated lifestyle collections.
+Push seasonal collections.
+End with a strong conversion banner and footer.
+User Intent
+
+The target user is likely browsing casually, not necessarily searching for one exact product.
+
+The layout supports:
+
+Visual discovery
+Product comparison
+Style inspiration
+Quick buying decisions
+Collection browsing
+Content Priority
+
+The page hierarchy is:
+
+Hero campaign
+Large emotional headline
+Lifestyle sneaker image
+Main CTA
+Featured category cards
+Three editorial-style sneaker promotions
+Newly Dropped Collections
+Product grid with prices and CTAs
+Recommended Collections
+Lifestyle image grid
+Summer Collections
+Repeated product grid
+Final CTA banner
+Emotional brand statement
+Footer
+Navigation, newsletter, legal, social/payment-style links
+Key User Actions
+
+Primary actions:
+
+Shop Now
+Get Your Pair
+View All Collection
+Add to Cart
+Buy Now
+Subscribe to newsletter
+
+Secondary actions:
+
+Browse categories
+Use nav links
+Open product details
+Use search/account/cart icons
+2. UI/UX Engineer Perspective
+Overall Page Structure
+
+The page is a centered fixed-width layout inside a light gray browser/page background.
+
+Outer Page
+body {
+  background: #eeeeec;
+}
+Main Container
+
+The actual website content sits inside a centered container.
+
+Approximate structure:
+
+<main className="mx-auto max-w-[1120px] bg-[#f8f7f3]">
+  <Header />
+  <Hero />
+  <FeatureCards />
+  <ProductSection title="Newly Dropped Collections" />
+  <RecommendedCollections />
+  <ProductSection title="Summer Collections" />
+  <FinalCTA />
+  <Footer />
+</main>
+
+Approximate desktop width:
+
+max-width: 1120px;
+
+The design is not full-bleed across the viewport. It intentionally feels like a premium editorial page framed inside a neutral background.
+
+Header Layout
+Position
+
+Header overlays the top of the hero section.
+
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+z-index: 20;
+Structure
+
+The header has:
+
+Logo on the left
+Navigation centered
+Utility icons on the right
+<header>
+  <Logo />
+  <nav>
+    Home
+    Men
+    Kids
+    Accessories
+    Collection
+  </nav>
+  <HeaderIcons />
+</header>
+Visual Style
+Transparent background
+White/light typography
+Small nav text
+Compact spacing
+Minimal icon style
+Approximate Spacing
+padding: 22px 56px;
+Hero Section
+Layout
+
+The hero is a large horizontal banner with:
+
+Left-aligned headline and CTA
+Right-side lifestyle model image
+Warm brown/sepia background
+Rounded bottom not strongly visible, mostly rectangular
+
+Approximate size:
+
+height: 520px;
+Hero Grid
+display: grid;
+grid-template-columns: 46% 54%;
+align-items: center;
+Hero Content
+
+Left content starts around 70px from the left.
+
+padding-left: 70px;
+max-width: 440px;
+Headline
+
+Text:
+
+Sneakers That
+Defy Your Every
+day Look
+
+Typography characteristics:
+
+Large serif display font
+Heavy weight
+Cream/off-white color
+Tight line-height
+Slight vintage/luxury editorial feel
+
+Suggested font options:
+
+font-family: "Cooper Black", "Recoleta", "Fraunces", "Georgia", serif;
+font-weight: 800;
+font-size: clamp(42px, 5vw, 72px);
+line-height: 0.95;
+letter-spacing: -0.04em;
+CTA Button
+
+White pill button:
+
+height: 40px;
+padding: 0 22px;
+border-radius: 999px;
+background: #f6f2e8;
+color: #2b2117;
+font-size: 12px;
+font-weight: 700;
+Hero Image
+
+The model image occupies the right side and overlaps visually into the hero.
+
+Important treatment:
+
+Cutout/lifestyle model integrated into warm background
+Bright sneakers strongly visible
+Image positioned lower-right
+Subject larger than normal product placement
+
+Implementation:
+
+<img
+  src="/hero-model.png"
+  className="absolute right-0 bottom-0 h-[95%] object-contain"
+/>
+Hero Carousel Controls
+
+Bottom-right of hero contains small circular controls.
+
+Visual:
+
+Two small black circular buttons
+White arrow/icon inside
+Positioned around bottom-right
+position: absolute;
+right: 48px;
+bottom: 28px;
+display: flex;
+gap: 8px;
+
+Use this for:
+
+Hero image carousel
+Campaign slide switching
+Featured lookbook slides
+Feature Cards Section
+Section Layout
+
+Three cards in a row beneath the hero.
+
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+padding: 72px 56px 44px;
+
+Cards sit on the cream background and each has rounded corners.
+
+Card 1
+
+Image: close-up sneaker/laces.
+
+Text:
+
+Sneakers That Move With
+You, Comfortable, Durable,
+And Always In Style.
+
+CTA:
+
+Find Your Fit
+
+Styling
+Dark image overlay
+Text bottom-left
+White typography
+Small pill button
+Rounded card radius
+border-radius: 14px;
+overflow: hidden;
+height: 240px;
+Card 2
+
+Image: sneaker product on brown background.
+
+Text:
+
+Fresh Drop: Iconic
+Silhouettes Sneakers That
+Speak Before You Do.
+
+CTA:
+
+Get Your Pair
+
+Same structure as card 1, slightly warmer and cleaner.
+
+Card 3
+
+Image: fashion outfit/sneaker lifestyle crop.
+
+Text:
+
+STYLE-STACK
+
+CTA:
+
+Shop Sneakers
+
+This card has a stronger editorial feel:
+
+Larger title
+Center-left content
+More fashion magazine style
+Product Sections
+
+There are two almost identical product grid sections:
+
+Newly Dropped Collections
+Summer Collections
+
+Each section uses the same reusable component.
+
+Section Header
+
+Centered title and subtitle.
+
+<section>
+  <SectionHeader
+    title="Newly Dropped Collections"
+    subtitle="These sneakers drop to freshen classics..."
+  />
+  <ProductGrid />
+</section>
+Title Typography
+
+Large serif display.
+
+font-family: "Recoleta", "Fraunces", Georgia, serif;
+font-size: 36px;
+line-height: 1.05;
+font-weight: 800;
+color: #2a2118;
+text-align: center;
+Subtitle
+
+Small muted text.
+
+font-size: 11px;
+line-height: 1.4;
+color: #7e766c;
+max-width: 420px;
+margin: 8px auto 0;
+Product Grid
+
+Desktop layout:
+
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 36px 28px;
+padding: 42px 56px 24px;
+
+There are 6 product cards per section.
+
+Product Card Structure
+
+Each card has:
+
+Product image box
+Price
+Small badge on the right
+Product name
+Short product description
+Add to Cart button
+Buy Now button
+<ProductCard>
+  <ProductImage />
+  <ProductMeta>
+    <Price />
+    <Badge />
+    <Name />
+    <Description />
+    <Actions />
+  </ProductMeta>
+</ProductCard>
+Product Image Box
+
+Visual style:
+
+Off-white/light gray square card
+Product centered
+Subtle soft background
+No heavy shadow
+Very minimal border
+aspect-ratio: 1 / 0.82;
+background: linear-gradient(#f8f8f6, #eeeeea);
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+
+Product image:
+
+width: 86%;
+height: auto;
+object-fit: contain;
+Product Card Typography
+Price
+font-size: 18px;
+font-weight: 800;
+color: #1d1813;
+Product Name
+font-size: 13px;
+font-weight: 800;
+color: #2d241a;
+Description
+font-size: 9px;
+line-height: 1.45;
+color: #6d6258;
+Badge
+
+Small cream/brown pill.
+
+font-size: 8px;
+padding: 4px 8px;
+border-radius: 999px;
+background: #f1eadf;
+border: 1px solid #d7c7b4;
+color: #6f5539;
+Product Buttons
+
+Two buttons side-by-side.
+
+Add to Cart
+
+Light button:
+
+background: #efe8dd;
+color: #3b2a1b;
+Buy Now
+
+Brown button:
+
+background: #806035;
+color: #ffffff;
+
+Shared style:
+
+height: 34px;
+border-radius: 6px;
+font-size: 10px;
+font-weight: 700;
+View More Button
+
+Centered below grid.
+
+margin: 34px auto 0;
+height: 38px;
+padding: 0 34px;
+border-radius: 8px;
+border: 1px solid #8b7458;
+background: transparent;
+color: #3b2a1b;
+Recommended Collections Section
+Section Purpose
+
+This section shifts from direct product selling to lifestyle discovery.
+
+It creates visual aspiration and helps users imagine outfits, styling, and use cases.
+
+Layout
+
+The grid uses an asymmetric editorial layout.
+
+Desktop structure:
+
+display: grid;
+grid-template-columns: 1.05fr 1fr;
+gap: 20px;
+
+Left side:
+
+One tall vertical card
+
+Right side:
+
+Two stacked horizontal cards
+
+Then a full-width banner underneath.
+
+Recommended Grid
+<div className="recommendation-grid">
+  <LargeLifestyleCard />
+  <div className="stacked-cards">
+    <SmallLifestyleCard />
+    <SmallLifestyleCard />
+  </div>
+  <WideLifestyleCard />
+</div>
+Large Card
+Tall image
+Sneakers worn while seated
+Text bottom-left
+CTA below text
+height: 430px;
+border-radius: 14px;
+overflow: hidden;
+Right Cards
+
+Each about half height of the left card.
+
+height: 205px;
+Wide Card
+
+Full-width large banner.
+
+grid-column: 1 / -1;
+height: 300px;
+Overlay Treatment
+
+All lifestyle cards use:
+
+background: linear-gradient(
+  to top,
+  rgba(0,0,0,0.45),
+  rgba(0,0,0,0.05)
+);
+
+Text:
+
+color: white;
+
+Button:
+
+background: white;
+color: #2b2117;
+border-radius: 999px;
+Final CTA Banner
+Purpose
+
+This is a final emotional conversion section.
+
+Text:
+
+Build Your Style With Confident
+Steps By Wearing Our Sneakers.
+
+CTA:
+
+Shop Now
+
+Layout
+
+Full-width image card inside page padding.
+
+margin: 80px 56px;
+height: 300px;
+border-radius: 14px;
+overflow: hidden;
+position: relative;
+
+Content is centered-left.
+
+position: absolute;
+left: 90px;
+top: 50%;
+transform: translateY(-50%);
+max-width: 560px;
+
+Visual treatment:
+
+Warm image background
+Dark overlay
+White serif headline
+White/cream CTA button
+Footer
+Structure
+
+Dark brown/near-black footer.
+
+background: #1e140c;
+color: #f7efe5;
+padding: 60px 56px 40px;
+Footer Grid
+display: grid;
+grid-template-columns: 1.5fr 1fr 1fr 1fr;
+gap: 56px;
+
+Footer columns:
+
+Brand + newsletter
+Categories
+Legal
+Help
+Newsletter Form
+
+Small horizontal input and button.
+
+<form>
+  <input placeholder="Enter your email address" />
+  <button>Subscribe</button>
+</form>
+
+Input:
+
+height: 36px;
+border-radius: 999px;
+background: rgba(255,255,255,0.08);
+border: 1px solid rgba(255,255,255,0.16);
+
+Button:
+
+border-radius: 999px;
+background: #f7efe5;
+color: #1e140c;
+Footer Background Mark
+
+There is a large semi-transparent abstract logo/shape in the bottom-right.
+
+position: absolute;
+right: -30px;
+bottom: -40px;
+font-size: 260px;
+opacity: 0.08;
+
+This helps the footer feel branded and less empty.
+
+3. Motion Graphics Developer Perspective
+Recommended Animation Direction
+
+The design should feel premium, smooth, and editorial — not overly playful.
+
+Use:
+
+GSAP for hero timeline, scroll reveals, image parallax, and section choreography.
+Motion for lightweight hover/tap states, product cards, buttons, and small UI transitions.
+Page Load Animation
+Hero Timeline with GSAP
+
+Sequence:
+
+Header fades down.
+Hero headline reveals line by line.
+CTA fades up.
+Model image slides in slightly from the right.
+Carousel controls fade in.
+
+Example direction:
+
+const tl = gsap.timeline();
+
+tl.from(".site-header", {
+  y: -20,
+  opacity: 0,
+  duration: 0.6,
+  ease: "power3.out",
+})
+.from(".hero-title-line", {
+  y: 42,
+  opacity: 0,
+  stagger: 0.12,
+  duration: 0.8,
+  ease: "power4.out",
+}, "-=0.2")
+.from(".hero-cta", {
+  y: 16,
+  opacity: 0,
+  duration: 0.45,
+}, "-=0.3")
+.from(".hero-image", {
+  x: 80,
+  opacity: 0,
+  scale: 1.04,
+  duration: 1,
+  ease: "power4.out",
+}, "-=0.7");
+Scroll Reveal Animations
+
+Use GSAP ScrollTrigger for:
+
+Feature cards
+Product cards
+Recommended collection cards
+Final CTA
+
+Suggested behavior:
+
+gsap.from(".product-card", {
+  scrollTrigger: {
+    trigger: ".product-grid",
+    start: "top 80%",
+  },
+  y: 40,
+  opacity: 0,
+  stagger: 0.08,
+  duration: 0.65,
+  ease: "power3.out",
+});
+Product Card Hover
+
+Use Motion for simple micro-interactions.
+
+Behavior:
+
+Image lifts slightly
+Product image scales up subtly
+Buy button darkens
+Card remains clean, no heavy shadow
+<motion.div
+  whileHover={{ y: -6 }}
+  transition={{ duration: 0.25, ease: "easeOut" }}
+>
+
+Product image:
+
+<motion.img
+  whileHover={{ scale: 1.04 }}
+/>
+Lifestyle Card Hover
+
+Behavior:
+
+Image zooms in slightly
+Overlay darkens
+Button slides up by 4px
+.card:hover img {
+  transform: scale(1.06);
+}
+
+Use:
+
+transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+Hero Carousel
+
+The bottom-right controls can switch slides.
+
+Animation:
+
+Current hero content fades out
+Image slides slightly
+New slide fades in
+Background color transitions
+
+Use GSAP timeline rather than basic state transition.
+
+Final CTA Motion
+
+On scroll:
+
+Background image scales from 1.08 to 1
+Text fades upward
+Button fades last
+
+This gives the final CTA a premium campaign feel.
+
+4. Graphic Designer Perspective
+Visual Language
+
+The design is:
+
+Earthy
+Premium casual
+Editorial
+Minimal
+Lifestyle-driven
+Warm and nostalgic
+
+It avoids loud sportswear styling. Instead of aggressive sneaker culture, it feels like fashion retail meets premium streetwear.
+
+Color Palette
+Main Colors
+Role	Color
+Page background	#eeeeec
+Main content background	#f8f7f3
+Hero brown	#7b674f / #8b755c
+Deep text brown	#2b2118
+CTA brown	#806035
+Soft beige	#efe8dd
+Footer dark brown	#1e140c
+White/cream text	#f8f1e8
+Typography
+Brand/Headings
+
+Use a heavy serif display font.
+
+Recommended:
+
+Recoleta
+Fraunces
+Cooper Black
+Cormorant Garamond, if more elegant
+Georgia as fallback
+
+The heading style is chunky and rounded, with a vintage premium tone.
+
+font-family: "Fraunces", Georgia, serif;
+font-weight: 800;
+letter-spacing: -0.04em;
+Body/UI Text
+
+Use a clean sans-serif.
+
+Recommended:
+
+Inter Tight
+Geist
+Satoshi
+Manrope
+font-family: "Inter Tight", "Geist", sans-serif;
+Image Treatment
+
+Product images:
+
+Clean cutout sneaker images
+Soft gray/white background
+Minimal shadow
+Centered composition
+No clutter
+
+Lifestyle images:
+
+Warm color grading
+Slight sepia/brown tone
+Soft contrast
+Natural light
+Editorial crops
+Overlay gradient for readability
+Shape Language
+
+The design uses:
+
+Soft rounded cards
+Pill buttons
+Rounded product image boxes
+Minimal hard borders
+Very soft shadows or none at all
+
+Recommended radius system:
+
+--radius-sm: 6px;
+--radius-md: 10px;
+--radius-lg: 14px;
+--radius-xl: 22px;
+--radius-pill: 999px;
+5. Full-Stack Developer Perspective
+Recommended Stack
+
+Use:
+
+React 19
+TanStack Start or Vite
+TypeScript
+Tailwind CSS v4
+shadcn/Radix-style primitives
+Supabase
+TanStack Query
+Zustand
+Motion
+GSAP
+Lucide React
+Sonner
+React Hook Form
+Zod
+
+For this specific landing page:
+
+Feature	Library
+Server data	TanStack Query
+Cart state	Zustand
+Product/admin forms	React Hook Form + Zod
+Hero/scroll animation	GSAP
+Card/button micro-interactions	Motion
+Icons	lucide-react
+Toasts	Sonner
+Backend/database	Supabase
+Product/category CRUD	Supabase RPCs
+Component Architecture
+src/
+  components/
+    layout/
+      SiteHeader.tsx
+      SiteFooter.tsx
+
+    home/
+      HeroSection.tsx
+      FeatureCards.tsx
+      ProductSection.tsx
+      ProductCard.tsx
+      RecommendedCollections.tsx
+      FinalCTA.tsx
+      NewsletterForm.tsx
+
+    ecommerce/
+      AddToCartButton.tsx
+      BuyNowButton.tsx
+      ProductBadge.tsx
+      Price.tsx
+
+    ui/
+      button.tsx
+      card.tsx
+      badge.tsx
+      input.tsx
+
+  lib/
+    supabase.ts
+    queries/
+      products.ts
+      collections.ts
+    stores/
+      cart-store.ts
+    validators/
+      newsletter.schema.ts
+
+  routes/
+    index.tsx
+    product/$slug.tsx
+    collection/$slug.tsx
+    cart.tsx
+Data Model
+Products Table
+products (
+  id uuid primary key,
+  name text not null,
+  slug text unique not null,
+  description text,
+  price numeric not null,
+  image_url text,
+  category_id uuid,
+  collection_id uuid,
+  badge text,
+  is_featured boolean default false,
+  is_new boolean default false,
+  is_summer boolean default false,
+  inventory_count int default 0,
+  created_at timestamptz default now()
+)
+Collections Table
+collections (
+  id uuid primary key,
+  title text not null,
+  slug text unique not null,
+  description text,
+  cover_image_url text,
+  type text,
+  sort_order int default 0,
+  is_active boolean default true,
+  created_at timestamptz default now()
+)
+Homepage Sections Table
+
+Useful if the page should be CMS-driven.
+
+homepage_sections (
+  id uuid primary key,
+  section_key text unique not null,
+  title text,
+  subtitle text,
+  image_url text,
+  cta_label text,
+  cta_url text,
+  sort_order int default 0,
+  is_active boolean default true
+)
+Newsletter Table
+newsletter_subscribers (
+  id uuid primary key,
+  email text unique not null,
+  source text default 'homepage_footer',
+  created_at timestamptz default now()
+)
+RPC-First Backend Direction
+
+Since you mentioned Supabase agent skills, business-critical operations should happen through RPCs.
+
+Examples:
+
+rpc_get_homepage_products()
+rpc_get_collection_products(collection_slug text)
+rpc_add_to_cart(user_id uuid, product_id uuid, quantity int)
+rpc_create_checkout_session(cart_id uuid)
+rpc_subscribe_newsletter(email text)
+
+Frontend should not calculate:
+
+Cart totals
+Discounts
+Availability
+Stock limits
+Tax/shipping
+Final checkout price
+
+The frontend should consume validated backend results.
+
+Zustand Cart Store
+
+Use Zustand only for client-side UI/cart draft state.
+
+type CartState = {
+  cartOpen: boolean;
+  optimisticItems: CartItem[];
+  openCart: () => void;
+  closeCart: () => void;
+};
+
+Actual cart pricing and availability must come from Supabase RPCs.
+
+Responsive Behavior
+Desktop
+Hero split layout
+3 feature cards
+3-column product grid
+Asymmetric recommendation grid
+4-column footer
+Tablet
+grid-template-columns: repeat(2, 1fr);
+
+Changes:
+
+Hero still split, but image slightly smaller
+Feature cards become 2 columns, third spans full width
+Product cards become 2 columns
+Footer becomes 2 columns
+Recommended grid stacks more simply
+Mobile
+
+Mobile should not simply shrink the desktop layout.
+
+Recommended mobile behavior:
+
+Header becomes compact with hamburger
+Hero becomes vertical
+Headline sits over background image or above image
+Product grid becomes 1 column or horizontal scroll collection
+Feature cards become stacked
+Recommended grid becomes stacked cards
+Footer becomes accordion-style sections
+@media (max-width: 640px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: 680px;
+    grid-template-columns: 1fr;
+  }
+}
+Cursor / AI Coding Agent Prompt
+
+Use this prompt to reproduce the layout accurately:
+
+Build a premium sneaker eCommerce landing page based on the uploaded reference.
+
+Use React 19, TypeScript, Tailwind CSS v4, shadcn/Radix-style components, Supabase, TanStack Query, Zustand, Motion, GSAP, lucide-react, Sonner, React Hook Form, and Zod where appropriate.
+
+Also use the installed skills:
+- greensock/gsap-skills
+- nextlevelbuilder/ui-ux-pro-max-skill
+- leonxlnx/taste-skill
+- emilkowalski/skill
+- supabase/agent-skills
+
+Design requirements:
+Create a centered max-width website layout on a light gray page background. The main content background should be warm off-white. The design should feel premium, editorial, earthy, warm, and fashion-focused.
+
+Page sections:
+1. Transparent overlay header with logo left, navigation center, utility icons right.
+2. Large hero banner with warm brown background, left serif headline, CTA button, right model/sneaker lifestyle image, and bottom-right carousel controls.
+3. Three promotional lifestyle cards under the hero, each with background image, dark overlay, text, and pill CTA.
+4. "Newly Dropped Collections" product section with centered heading/subtitle and 3-column product grid.
+5. Asymmetric recommended collections grid: one large left image card, two stacked right image cards, and one full-width banner card below.
+6. "Summer Collections" product section using the same reusable product grid.
+7. Final image CTA banner with large white serif text and centered CTA button.
+8. Dark brown footer with logo, newsletter subscription, category links, legal links, help links, and subtle oversized brand mark.
+
+Typography:
+Use a heavy rounded serif display font for headings, similar to Fraunces/Recoleta/Cooper Black. Use Inter Tight or Geist for body, navigation, buttons, and product text.
+
+Colors:
+Use warm cream, beige, brown, dark chocolate, and off-white tones. Avoid harsh black except in small text. Avoid heavy shadows.
+
+Product cards:
+Each product card should have a soft off-white image container, centered sneaker image, price, small badge, product name, short description, Add to Cart button, and Buy Now button. Buttons should be small, rectangular with slight radius, with Add to Cart in light beige and Buy Now in brown.
+
+Animations:
+Use GSAP for the hero page-load sequence, scroll-triggered card/product reveals, parallax lifestyle images, and final CTA reveal. Use Motion for simple hover/tap interactions on product cards, buttons, and image cards. Keep all motion smooth, premium, and restrained.
+
+Backend:
+Use Supabase with an RPC-first architecture. Product data, collection data, pricing, stock, and checkout calculations must come from secure backend RPCs. The frontend should not calculate business-critical totals. Use TanStack Query for server data and Zustand only for client UI state such as cart drawer open/closed or temporary optimistic state.
+
+Responsive:
+Desktop should match the reference with 3-column product grids and asymmetric lifestyle layouts. Tablet should reduce to 2 columns. Mobile should stack sections cleanly, use a hamburger menu, and avoid squeezing desktop layouts.
+Key Reproduction Notes
+
+The most important details to preserve are:
+
+Warm editorial sneaker brand tone
+Heavy rounded serif typography
+Centered framed page layout
+Brown/cream color system
+Large lifestyle-led hero
+Product grids with minimal clean cards
+Asymmetric recommendation section
+Soft rounded corners
+Subtle premium animations
+Dark branded footer
+
+This should not be built like a generic Shopify template. It should feel like a fashion campaign landing page
