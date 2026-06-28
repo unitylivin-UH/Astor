@@ -18,6 +18,9 @@ const deployTarget = process.env.DEPLOY_TARGET ?? 'node'
 const isNetlify = deployTarget === 'netlify'
 
 export default defineConfig({
+  esbuild: {
+    jsxDev: false,
+  },
   server: {
     port: 3000,
     strictPort: true,
@@ -30,7 +33,9 @@ export default defineConfig({
   },
   plugins: [
     tanstackStart(),
-    viteReact(),
+    viteReact({
+      jsxRuntime: 'automatic',
+    }),
     tailwindcss(),
     ...(isNetlify
       ? [netlify()]
