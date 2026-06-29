@@ -271,6 +271,7 @@ export const staticCmsSnapshot: CmsSnapshot = {
     stripe_mode: 'test',
     checkout_mode: 'quote',
     quote_notification_email: 'quotes@astor.example',
+    contact_notification_email: 'info@astor.ae',
     favicon_url: '/images/favicon%20astor.png',
     logo_dark_url: '/images/ASTOR%20logo.png',
     logo_light_url: '',

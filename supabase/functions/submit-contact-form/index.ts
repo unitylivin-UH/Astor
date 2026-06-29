@@ -57,15 +57,21 @@ Deno.serve(async (req) => {
       .eq('key', 'contact_notification_email')
       .maybeSingle()
 
-    const notifyEmail = notifyRow?.value?.trim()
-    if (notifyEmail) {
-      const messageHtml = `<p style="margin:0;font-size:14px;line-height:1.6;color:#3d3428;white-space:pre-wrap;">${escapeHtml(message)}</p>`
-      await sendTemplateEmail(supabase, 'contact_form_admin', notifyEmail, {
-        customer_name: name,
-        customer_email: email,
-        message_body: message,
-        message_html: messageHtml,
-      }, { replyTo: email })
+    const notifyEmail =
+      notifyRow?.value?.trim() ||
+      Deno.env.get('CONTACT_NOTIFICATION_EMAIL')?.trim() ||
+      'info@astor.ae'
+
+    const messageHtml = `<p style="margin:0;font-size:14px;line-height:1.6;color:#3d3428;white-space:pre-wrap;">${escapeHtml(message)}</p>`
+    const emailResult = await sendTemplateEmail(supabase, 'contact_form_admin', notifyEmail, {
+      customer_name: name,
+      customer_email: email,
+      message_body: message,
+      message_html: messageHtml,
+    }, { replyTo: email })
+
+    if (!emailResult.sent) {
+      console.error('Contact notification email failed:', emailResult.reason)
     }
 
     return new Response(JSON.stringify({ ok: true }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
