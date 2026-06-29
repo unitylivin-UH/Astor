@@ -20,7 +20,7 @@ export function AdminCommerceHub({ tab }: { tab: TabId }) {
     <AdminTabHub
       title="Commerce"
       subtitle="Orders, checkout settings, and payment integrations."
-      hubPath="/admin/commerce"
+      hubPath="/backend/commerce"
       tabs={[...TABS]}
       activeTab={tab}
     />

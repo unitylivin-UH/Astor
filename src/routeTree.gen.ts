@@ -13,41 +13,44 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AccountRouteImport } from './routes/account'
+import { Route as BackendRouteRouteImport } from './routes/backend/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BundlesIndexRouteImport } from './routes/bundles/index'
+import { Route as BackendIndexRouteImport } from './routes/backend/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ProductSlugRouteImport } from './routes/product/$slug'
 import { Route as PagesSlugRouteImport } from './routes/pages/$slug'
 import { Route as CollectionSlugRouteImport } from './routes/collection/$slug'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout/success'
 import { Route as BundleSlugRouteImport } from './routes/bundle/$slug'
-import { Route as AdminUsersRouteImport } from './routes/admin/users'
-import { Route as AdminSubmissionsRouteImport } from './routes/admin/submissions'
-import { Route as AdminSiteSettingsRouteImport } from './routes/admin/site-settings'
-import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
-import { Route as AdminProductsRouteImport } from './routes/admin/products'
-import { Route as AdminPagesRouteImport } from './routes/admin/pages'
-import { Route as AdminOrdersRouteImport } from './routes/admin/orders'
-import { Route as AdminNewsletterRouteImport } from './routes/admin/newsletter'
-import { Route as AdminNavLinksRouteImport } from './routes/admin/nav-links'
-import { Route as AdminMediaRouteImport } from './routes/admin/media'
-import { Route as AdminLoginRouteImport } from './routes/admin/login'
-import { Route as AdminLifestyleCardsRouteImport } from './routes/admin/lifestyle-cards'
-import { Route as AdminIntegrationsRouteImport } from './routes/admin/integrations'
-import { Route as AdminHomepageSectionsRouteImport } from './routes/admin/homepage-sections'
-import { Route as AdminHomepageRouteImport } from './routes/admin/homepage'
-import { Route as AdminHeroSlidesRouteImport } from './routes/admin/hero-slides'
-import { Route as AdminFeatureCardsRouteImport } from './routes/admin/feature-cards'
-import { Route as AdminEmailTemplatesRouteImport } from './routes/admin/email-templates'
-import { Route as AdminDataTransferRouteImport } from './routes/admin/data-transfer'
-import { Route as AdminContentRouteImport } from './routes/admin/content'
-import { Route as AdminCommunicationsRouteImport } from './routes/admin/communications'
-import { Route as AdminCommerceRouteImport } from './routes/admin/commerce'
-import { Route as AdminCollectionsRouteImport } from './routes/admin/collections'
-import { Route as AdminCheckoutRouteImport } from './routes/admin/checkout'
-import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
-import { Route as AdminCatalogRouteImport } from './routes/admin/catalog'
+import { Route as BackendUsersRouteImport } from './routes/backend/users'
+import { Route as BackendSubmissionsRouteImport } from './routes/backend/submissions'
+import { Route as BackendSiteSettingsRouteImport } from './routes/backend/site-settings'
+import { Route as BackendSettingsRouteImport } from './routes/backend/settings'
+import { Route as BackendProductsRouteImport } from './routes/backend/products'
+import { Route as BackendPagesRouteImport } from './routes/backend/pages'
+import { Route as BackendOrdersRouteImport } from './routes/backend/orders'
+import { Route as BackendNewsletterRouteImport } from './routes/backend/newsletter'
+import { Route as BackendNavLinksRouteImport } from './routes/backend/nav-links'
+import { Route as BackendMediaRouteImport } from './routes/backend/media'
+import { Route as BackendLoginRouteImport } from './routes/backend/login'
+import { Route as BackendLifestyleCardsRouteImport } from './routes/backend/lifestyle-cards'
+import { Route as BackendIntegrationsRouteImport } from './routes/backend/integrations'
+import { Route as BackendHomepageSectionsRouteImport } from './routes/backend/homepage-sections'
+import { Route as BackendHomepageRouteImport } from './routes/backend/homepage'
+import { Route as BackendHeroSlidesRouteImport } from './routes/backend/hero-slides'
+import { Route as BackendFeatureCardsRouteImport } from './routes/backend/feature-cards'
+import { Route as BackendEmailTemplatesRouteImport } from './routes/backend/email-templates'
+import { Route as BackendDataTransferRouteImport } from './routes/backend/data-transfer'
+import { Route as BackendContentRouteImport } from './routes/backend/content'
+import { Route as BackendCommunicationsRouteImport } from './routes/backend/communications'
+import { Route as BackendCommerceRouteImport } from './routes/backend/commerce'
+import { Route as BackendCollectionsRouteImport } from './routes/backend/collections'
+import { Route as BackendCheckoutRouteImport } from './routes/backend/checkout'
+import { Route as BackendCategoriesRouteImport } from './routes/backend/categories'
+import { Route as BackendCatalogRouteImport } from './routes/backend/catalog'
+import { Route as AdminSplatRouteImport } from './routes/admin/$'
 import { Route as AccountOrdersOrderIdRouteImport } from './routes/account/orders/$orderId'
 
 const SearchRoute = SearchRouteImport.update({
@@ -70,6 +73,11 @@ const AccountRoute = AccountRouteImport.update({
   path: '/account',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BackendRouteRoute = BackendRouteRouteImport.update({
+  id: '/backend',
+  path: '/backend',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -84,6 +92,11 @@ const BundlesIndexRoute = BundlesIndexRouteImport.update({
   id: '/bundles/',
   path: '/bundles/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const BackendIndexRoute = BackendIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BackendRouteRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
@@ -115,134 +128,139 @@ const BundleSlugRoute = BundleSlugRouteImport.update({
   path: '/bundle/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
+const BackendUsersRoute = BackendUsersRouteImport.update({
   id: '/users',
   path: '/users',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminSubmissionsRoute = AdminSubmissionsRouteImport.update({
+const BackendSubmissionsRoute = BackendSubmissionsRouteImport.update({
   id: '/submissions',
   path: '/submissions',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminSiteSettingsRoute = AdminSiteSettingsRouteImport.update({
+const BackendSiteSettingsRoute = BackendSiteSettingsRouteImport.update({
   id: '/site-settings',
   path: '/site-settings',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
+const BackendSettingsRoute = BackendSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminProductsRoute = AdminProductsRouteImport.update({
+const BackendProductsRoute = BackendProductsRouteImport.update({
   id: '/products',
   path: '/products',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminPagesRoute = AdminPagesRouteImport.update({
+const BackendPagesRoute = BackendPagesRouteImport.update({
   id: '/pages',
   path: '/pages',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminOrdersRoute = AdminOrdersRouteImport.update({
+const BackendOrdersRoute = BackendOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminNewsletterRoute = AdminNewsletterRouteImport.update({
+const BackendNewsletterRoute = BackendNewsletterRouteImport.update({
   id: '/newsletter',
   path: '/newsletter',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminNavLinksRoute = AdminNavLinksRouteImport.update({
+const BackendNavLinksRoute = BackendNavLinksRouteImport.update({
   id: '/nav-links',
   path: '/nav-links',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminMediaRoute = AdminMediaRouteImport.update({
+const BackendMediaRoute = BackendMediaRouteImport.update({
   id: '/media',
   path: '/media',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
+const BackendLoginRoute = BackendLoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminLifestyleCardsRoute = AdminLifestyleCardsRouteImport.update({
+const BackendLifestyleCardsRoute = BackendLifestyleCardsRouteImport.update({
   id: '/lifestyle-cards',
   path: '/lifestyle-cards',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
+const BackendIntegrationsRoute = BackendIntegrationsRouteImport.update({
   id: '/integrations',
   path: '/integrations',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminHomepageSectionsRoute = AdminHomepageSectionsRouteImport.update({
+const BackendHomepageSectionsRoute = BackendHomepageSectionsRouteImport.update({
   id: '/homepage-sections',
   path: '/homepage-sections',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminHomepageRoute = AdminHomepageRouteImport.update({
+const BackendHomepageRoute = BackendHomepageRouteImport.update({
   id: '/homepage',
   path: '/homepage',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminHeroSlidesRoute = AdminHeroSlidesRouteImport.update({
+const BackendHeroSlidesRoute = BackendHeroSlidesRouteImport.update({
   id: '/hero-slides',
   path: '/hero-slides',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminFeatureCardsRoute = AdminFeatureCardsRouteImport.update({
+const BackendFeatureCardsRoute = BackendFeatureCardsRouteImport.update({
   id: '/feature-cards',
   path: '/feature-cards',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminEmailTemplatesRoute = AdminEmailTemplatesRouteImport.update({
+const BackendEmailTemplatesRoute = BackendEmailTemplatesRouteImport.update({
   id: '/email-templates',
   path: '/email-templates',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminDataTransferRoute = AdminDataTransferRouteImport.update({
+const BackendDataTransferRoute = BackendDataTransferRouteImport.update({
   id: '/data-transfer',
   path: '/data-transfer',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminContentRoute = AdminContentRouteImport.update({
+const BackendContentRoute = BackendContentRouteImport.update({
   id: '/content',
   path: '/content',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminCommunicationsRoute = AdminCommunicationsRouteImport.update({
+const BackendCommunicationsRoute = BackendCommunicationsRouteImport.update({
   id: '/communications',
   path: '/communications',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminCommerceRoute = AdminCommerceRouteImport.update({
+const BackendCommerceRoute = BackendCommerceRouteImport.update({
   id: '/commerce',
   path: '/commerce',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminCollectionsRoute = AdminCollectionsRouteImport.update({
+const BackendCollectionsRoute = BackendCollectionsRouteImport.update({
   id: '/collections',
   path: '/collections',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminCheckoutRoute = AdminCheckoutRouteImport.update({
+const BackendCheckoutRoute = BackendCheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+const BackendCategoriesRoute = BackendCategoriesRouteImport.update({
   id: '/categories',
   path: '/categories',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => BackendRouteRoute,
 } as any)
-const AdminCatalogRoute = AdminCatalogRouteImport.update({
+const BackendCatalogRoute = BackendCatalogRouteImport.update({
   id: '/catalog',
   path: '/catalog',
+  getParentRoute: () => BackendRouteRoute,
+} as any)
+const AdminSplatRoute = AdminSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AccountOrdersOrderIdRoute = AccountOrdersOrderIdRouteImport.update({
@@ -254,42 +272,45 @@ const AccountOrdersOrderIdRoute = AccountOrdersOrderIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '/backend': typeof BackendRouteRouteWithChildren
   '/account': typeof AccountRouteWithChildren
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRouteWithChildren
   '/search': typeof SearchRoute
-  '/admin/catalog': typeof AdminCatalogRoute
-  '/admin/categories': typeof AdminCategoriesRoute
-  '/admin/checkout': typeof AdminCheckoutRoute
-  '/admin/collections': typeof AdminCollectionsRoute
-  '/admin/commerce': typeof AdminCommerceRoute
-  '/admin/communications': typeof AdminCommunicationsRoute
-  '/admin/content': typeof AdminContentRoute
-  '/admin/data-transfer': typeof AdminDataTransferRoute
-  '/admin/email-templates': typeof AdminEmailTemplatesRoute
-  '/admin/feature-cards': typeof AdminFeatureCardsRoute
-  '/admin/hero-slides': typeof AdminHeroSlidesRoute
-  '/admin/homepage': typeof AdminHomepageRoute
-  '/admin/homepage-sections': typeof AdminHomepageSectionsRoute
-  '/admin/integrations': typeof AdminIntegrationsRoute
-  '/admin/lifestyle-cards': typeof AdminLifestyleCardsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/media': typeof AdminMediaRoute
-  '/admin/nav-links': typeof AdminNavLinksRoute
-  '/admin/newsletter': typeof AdminNewsletterRoute
-  '/admin/orders': typeof AdminOrdersRoute
-  '/admin/pages': typeof AdminPagesRoute
-  '/admin/products': typeof AdminProductsRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/site-settings': typeof AdminSiteSettingsRoute
-  '/admin/submissions': typeof AdminSubmissionsRoute
-  '/admin/users': typeof AdminUsersRoute
+  '/admin/$': typeof AdminSplatRoute
+  '/backend/catalog': typeof BackendCatalogRoute
+  '/backend/categories': typeof BackendCategoriesRoute
+  '/backend/checkout': typeof BackendCheckoutRoute
+  '/backend/collections': typeof BackendCollectionsRoute
+  '/backend/commerce': typeof BackendCommerceRoute
+  '/backend/communications': typeof BackendCommunicationsRoute
+  '/backend/content': typeof BackendContentRoute
+  '/backend/data-transfer': typeof BackendDataTransferRoute
+  '/backend/email-templates': typeof BackendEmailTemplatesRoute
+  '/backend/feature-cards': typeof BackendFeatureCardsRoute
+  '/backend/hero-slides': typeof BackendHeroSlidesRoute
+  '/backend/homepage': typeof BackendHomepageRoute
+  '/backend/homepage-sections': typeof BackendHomepageSectionsRoute
+  '/backend/integrations': typeof BackendIntegrationsRoute
+  '/backend/lifestyle-cards': typeof BackendLifestyleCardsRoute
+  '/backend/login': typeof BackendLoginRoute
+  '/backend/media': typeof BackendMediaRoute
+  '/backend/nav-links': typeof BackendNavLinksRoute
+  '/backend/newsletter': typeof BackendNewsletterRoute
+  '/backend/orders': typeof BackendOrdersRoute
+  '/backend/pages': typeof BackendPagesRoute
+  '/backend/products': typeof BackendProductsRoute
+  '/backend/settings': typeof BackendSettingsRoute
+  '/backend/site-settings': typeof BackendSiteSettingsRoute
+  '/backend/submissions': typeof BackendSubmissionsRoute
+  '/backend/users': typeof BackendUsersRoute
   '/bundle/$slug': typeof BundleSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/pages/$slug': typeof PagesSlugRoute
   '/product/$slug': typeof ProductSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/backend/': typeof BackendIndexRoute
   '/bundles/': typeof BundlesIndexRoute
   '/account/orders/$orderId': typeof AccountOrdersOrderIdRoute
 }
@@ -299,38 +320,40 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRouteWithChildren
   '/search': typeof SearchRoute
-  '/admin/catalog': typeof AdminCatalogRoute
-  '/admin/categories': typeof AdminCategoriesRoute
-  '/admin/checkout': typeof AdminCheckoutRoute
-  '/admin/collections': typeof AdminCollectionsRoute
-  '/admin/commerce': typeof AdminCommerceRoute
-  '/admin/communications': typeof AdminCommunicationsRoute
-  '/admin/content': typeof AdminContentRoute
-  '/admin/data-transfer': typeof AdminDataTransferRoute
-  '/admin/email-templates': typeof AdminEmailTemplatesRoute
-  '/admin/feature-cards': typeof AdminFeatureCardsRoute
-  '/admin/hero-slides': typeof AdminHeroSlidesRoute
-  '/admin/homepage': typeof AdminHomepageRoute
-  '/admin/homepage-sections': typeof AdminHomepageSectionsRoute
-  '/admin/integrations': typeof AdminIntegrationsRoute
-  '/admin/lifestyle-cards': typeof AdminLifestyleCardsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/media': typeof AdminMediaRoute
-  '/admin/nav-links': typeof AdminNavLinksRoute
-  '/admin/newsletter': typeof AdminNewsletterRoute
-  '/admin/orders': typeof AdminOrdersRoute
-  '/admin/pages': typeof AdminPagesRoute
-  '/admin/products': typeof AdminProductsRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/site-settings': typeof AdminSiteSettingsRoute
-  '/admin/submissions': typeof AdminSubmissionsRoute
-  '/admin/users': typeof AdminUsersRoute
+  '/admin/$': typeof AdminSplatRoute
+  '/backend/catalog': typeof BackendCatalogRoute
+  '/backend/categories': typeof BackendCategoriesRoute
+  '/backend/checkout': typeof BackendCheckoutRoute
+  '/backend/collections': typeof BackendCollectionsRoute
+  '/backend/commerce': typeof BackendCommerceRoute
+  '/backend/communications': typeof BackendCommunicationsRoute
+  '/backend/content': typeof BackendContentRoute
+  '/backend/data-transfer': typeof BackendDataTransferRoute
+  '/backend/email-templates': typeof BackendEmailTemplatesRoute
+  '/backend/feature-cards': typeof BackendFeatureCardsRoute
+  '/backend/hero-slides': typeof BackendHeroSlidesRoute
+  '/backend/homepage': typeof BackendHomepageRoute
+  '/backend/homepage-sections': typeof BackendHomepageSectionsRoute
+  '/backend/integrations': typeof BackendIntegrationsRoute
+  '/backend/lifestyle-cards': typeof BackendLifestyleCardsRoute
+  '/backend/login': typeof BackendLoginRoute
+  '/backend/media': typeof BackendMediaRoute
+  '/backend/nav-links': typeof BackendNavLinksRoute
+  '/backend/newsletter': typeof BackendNewsletterRoute
+  '/backend/orders': typeof BackendOrdersRoute
+  '/backend/pages': typeof BackendPagesRoute
+  '/backend/products': typeof BackendProductsRoute
+  '/backend/settings': typeof BackendSettingsRoute
+  '/backend/site-settings': typeof BackendSiteSettingsRoute
+  '/backend/submissions': typeof BackendSubmissionsRoute
+  '/backend/users': typeof BackendUsersRoute
   '/bundle/$slug': typeof BundleSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/pages/$slug': typeof PagesSlugRoute
   '/product/$slug': typeof ProductSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/backend': typeof BackendIndexRoute
   '/bundles': typeof BundlesIndexRoute
   '/account/orders/$orderId': typeof AccountOrdersOrderIdRoute
 }
@@ -338,42 +361,45 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '/backend': typeof BackendRouteRouteWithChildren
   '/account': typeof AccountRouteWithChildren
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRouteWithChildren
   '/search': typeof SearchRoute
-  '/admin/catalog': typeof AdminCatalogRoute
-  '/admin/categories': typeof AdminCategoriesRoute
-  '/admin/checkout': typeof AdminCheckoutRoute
-  '/admin/collections': typeof AdminCollectionsRoute
-  '/admin/commerce': typeof AdminCommerceRoute
-  '/admin/communications': typeof AdminCommunicationsRoute
-  '/admin/content': typeof AdminContentRoute
-  '/admin/data-transfer': typeof AdminDataTransferRoute
-  '/admin/email-templates': typeof AdminEmailTemplatesRoute
-  '/admin/feature-cards': typeof AdminFeatureCardsRoute
-  '/admin/hero-slides': typeof AdminHeroSlidesRoute
-  '/admin/homepage': typeof AdminHomepageRoute
-  '/admin/homepage-sections': typeof AdminHomepageSectionsRoute
-  '/admin/integrations': typeof AdminIntegrationsRoute
-  '/admin/lifestyle-cards': typeof AdminLifestyleCardsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/media': typeof AdminMediaRoute
-  '/admin/nav-links': typeof AdminNavLinksRoute
-  '/admin/newsletter': typeof AdminNewsletterRoute
-  '/admin/orders': typeof AdminOrdersRoute
-  '/admin/pages': typeof AdminPagesRoute
-  '/admin/products': typeof AdminProductsRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/site-settings': typeof AdminSiteSettingsRoute
-  '/admin/submissions': typeof AdminSubmissionsRoute
-  '/admin/users': typeof AdminUsersRoute
+  '/admin/$': typeof AdminSplatRoute
+  '/backend/catalog': typeof BackendCatalogRoute
+  '/backend/categories': typeof BackendCategoriesRoute
+  '/backend/checkout': typeof BackendCheckoutRoute
+  '/backend/collections': typeof BackendCollectionsRoute
+  '/backend/commerce': typeof BackendCommerceRoute
+  '/backend/communications': typeof BackendCommunicationsRoute
+  '/backend/content': typeof BackendContentRoute
+  '/backend/data-transfer': typeof BackendDataTransferRoute
+  '/backend/email-templates': typeof BackendEmailTemplatesRoute
+  '/backend/feature-cards': typeof BackendFeatureCardsRoute
+  '/backend/hero-slides': typeof BackendHeroSlidesRoute
+  '/backend/homepage': typeof BackendHomepageRoute
+  '/backend/homepage-sections': typeof BackendHomepageSectionsRoute
+  '/backend/integrations': typeof BackendIntegrationsRoute
+  '/backend/lifestyle-cards': typeof BackendLifestyleCardsRoute
+  '/backend/login': typeof BackendLoginRoute
+  '/backend/media': typeof BackendMediaRoute
+  '/backend/nav-links': typeof BackendNavLinksRoute
+  '/backend/newsletter': typeof BackendNewsletterRoute
+  '/backend/orders': typeof BackendOrdersRoute
+  '/backend/pages': typeof BackendPagesRoute
+  '/backend/products': typeof BackendProductsRoute
+  '/backend/settings': typeof BackendSettingsRoute
+  '/backend/site-settings': typeof BackendSiteSettingsRoute
+  '/backend/submissions': typeof BackendSubmissionsRoute
+  '/backend/users': typeof BackendUsersRoute
   '/bundle/$slug': typeof BundleSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/pages/$slug': typeof PagesSlugRoute
   '/product/$slug': typeof ProductSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/backend/': typeof BackendIndexRoute
   '/bundles/': typeof BundlesIndexRoute
   '/account/orders/$orderId': typeof AccountOrdersOrderIdRoute
 }
@@ -382,42 +408,45 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/backend'
     | '/account'
     | '/cart'
     | '/checkout'
     | '/search'
-    | '/admin/catalog'
-    | '/admin/categories'
-    | '/admin/checkout'
-    | '/admin/collections'
-    | '/admin/commerce'
-    | '/admin/communications'
-    | '/admin/content'
-    | '/admin/data-transfer'
-    | '/admin/email-templates'
-    | '/admin/feature-cards'
-    | '/admin/hero-slides'
-    | '/admin/homepage'
-    | '/admin/homepage-sections'
-    | '/admin/integrations'
-    | '/admin/lifestyle-cards'
-    | '/admin/login'
-    | '/admin/media'
-    | '/admin/nav-links'
-    | '/admin/newsletter'
-    | '/admin/orders'
-    | '/admin/pages'
-    | '/admin/products'
-    | '/admin/settings'
-    | '/admin/site-settings'
-    | '/admin/submissions'
-    | '/admin/users'
+    | '/admin/$'
+    | '/backend/catalog'
+    | '/backend/categories'
+    | '/backend/checkout'
+    | '/backend/collections'
+    | '/backend/commerce'
+    | '/backend/communications'
+    | '/backend/content'
+    | '/backend/data-transfer'
+    | '/backend/email-templates'
+    | '/backend/feature-cards'
+    | '/backend/hero-slides'
+    | '/backend/homepage'
+    | '/backend/homepage-sections'
+    | '/backend/integrations'
+    | '/backend/lifestyle-cards'
+    | '/backend/login'
+    | '/backend/media'
+    | '/backend/nav-links'
+    | '/backend/newsletter'
+    | '/backend/orders'
+    | '/backend/pages'
+    | '/backend/products'
+    | '/backend/settings'
+    | '/backend/site-settings'
+    | '/backend/submissions'
+    | '/backend/users'
     | '/bundle/$slug'
     | '/checkout/success'
     | '/collection/$slug'
     | '/pages/$slug'
     | '/product/$slug'
     | '/admin/'
+    | '/backend/'
     | '/bundles/'
     | '/account/orders/$orderId'
   fileRoutesByTo: FileRoutesByTo
@@ -427,80 +456,85 @@ export interface FileRouteTypes {
     | '/cart'
     | '/checkout'
     | '/search'
-    | '/admin/catalog'
-    | '/admin/categories'
-    | '/admin/checkout'
-    | '/admin/collections'
-    | '/admin/commerce'
-    | '/admin/communications'
-    | '/admin/content'
-    | '/admin/data-transfer'
-    | '/admin/email-templates'
-    | '/admin/feature-cards'
-    | '/admin/hero-slides'
-    | '/admin/homepage'
-    | '/admin/homepage-sections'
-    | '/admin/integrations'
-    | '/admin/lifestyle-cards'
-    | '/admin/login'
-    | '/admin/media'
-    | '/admin/nav-links'
-    | '/admin/newsletter'
-    | '/admin/orders'
-    | '/admin/pages'
-    | '/admin/products'
-    | '/admin/settings'
-    | '/admin/site-settings'
-    | '/admin/submissions'
-    | '/admin/users'
+    | '/admin/$'
+    | '/backend/catalog'
+    | '/backend/categories'
+    | '/backend/checkout'
+    | '/backend/collections'
+    | '/backend/commerce'
+    | '/backend/communications'
+    | '/backend/content'
+    | '/backend/data-transfer'
+    | '/backend/email-templates'
+    | '/backend/feature-cards'
+    | '/backend/hero-slides'
+    | '/backend/homepage'
+    | '/backend/homepage-sections'
+    | '/backend/integrations'
+    | '/backend/lifestyle-cards'
+    | '/backend/login'
+    | '/backend/media'
+    | '/backend/nav-links'
+    | '/backend/newsletter'
+    | '/backend/orders'
+    | '/backend/pages'
+    | '/backend/products'
+    | '/backend/settings'
+    | '/backend/site-settings'
+    | '/backend/submissions'
+    | '/backend/users'
     | '/bundle/$slug'
     | '/checkout/success'
     | '/collection/$slug'
     | '/pages/$slug'
     | '/product/$slug'
     | '/admin'
+    | '/backend'
     | '/bundles'
     | '/account/orders/$orderId'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/backend'
     | '/account'
     | '/cart'
     | '/checkout'
     | '/search'
-    | '/admin/catalog'
-    | '/admin/categories'
-    | '/admin/checkout'
-    | '/admin/collections'
-    | '/admin/commerce'
-    | '/admin/communications'
-    | '/admin/content'
-    | '/admin/data-transfer'
-    | '/admin/email-templates'
-    | '/admin/feature-cards'
-    | '/admin/hero-slides'
-    | '/admin/homepage'
-    | '/admin/homepage-sections'
-    | '/admin/integrations'
-    | '/admin/lifestyle-cards'
-    | '/admin/login'
-    | '/admin/media'
-    | '/admin/nav-links'
-    | '/admin/newsletter'
-    | '/admin/orders'
-    | '/admin/pages'
-    | '/admin/products'
-    | '/admin/settings'
-    | '/admin/site-settings'
-    | '/admin/submissions'
-    | '/admin/users'
+    | '/admin/$'
+    | '/backend/catalog'
+    | '/backend/categories'
+    | '/backend/checkout'
+    | '/backend/collections'
+    | '/backend/commerce'
+    | '/backend/communications'
+    | '/backend/content'
+    | '/backend/data-transfer'
+    | '/backend/email-templates'
+    | '/backend/feature-cards'
+    | '/backend/hero-slides'
+    | '/backend/homepage'
+    | '/backend/homepage-sections'
+    | '/backend/integrations'
+    | '/backend/lifestyle-cards'
+    | '/backend/login'
+    | '/backend/media'
+    | '/backend/nav-links'
+    | '/backend/newsletter'
+    | '/backend/orders'
+    | '/backend/pages'
+    | '/backend/products'
+    | '/backend/settings'
+    | '/backend/site-settings'
+    | '/backend/submissions'
+    | '/backend/users'
     | '/bundle/$slug'
     | '/checkout/success'
     | '/collection/$slug'
     | '/pages/$slug'
     | '/product/$slug'
     | '/admin/'
+    | '/backend/'
     | '/bundles/'
     | '/account/orders/$orderId'
   fileRoutesById: FileRoutesById
@@ -508,6 +542,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  BackendRouteRoute: typeof BackendRouteRouteWithChildren
   AccountRoute: typeof AccountRouteWithChildren
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRouteWithChildren
@@ -549,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/backend': {
+      id: '/backend'
+      path: '/backend'
+      fullPath: '/backend'
+      preLoaderRoute: typeof BackendRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -569,6 +611,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/bundles/'
       preLoaderRoute: typeof BundlesIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/backend/': {
+      id: '/backend/'
+      path: '/'
+      fullPath: '/backend/'
+      preLoaderRoute: typeof BackendIndexRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -612,186 +661,193 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BundleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/users': {
-      id: '/admin/users'
+    '/backend/users': {
+      id: '/backend/users'
       path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/users'
+      preLoaderRoute: typeof BackendUsersRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/submissions': {
-      id: '/admin/submissions'
+    '/backend/submissions': {
+      id: '/backend/submissions'
       path: '/submissions'
-      fullPath: '/admin/submissions'
-      preLoaderRoute: typeof AdminSubmissionsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/submissions'
+      preLoaderRoute: typeof BackendSubmissionsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/site-settings': {
-      id: '/admin/site-settings'
+    '/backend/site-settings': {
+      id: '/backend/site-settings'
       path: '/site-settings'
-      fullPath: '/admin/site-settings'
-      preLoaderRoute: typeof AdminSiteSettingsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/site-settings'
+      preLoaderRoute: typeof BackendSiteSettingsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/settings': {
-      id: '/admin/settings'
+    '/backend/settings': {
+      id: '/backend/settings'
       path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/settings'
+      preLoaderRoute: typeof BackendSettingsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/products': {
-      id: '/admin/products'
+    '/backend/products': {
+      id: '/backend/products'
       path: '/products'
-      fullPath: '/admin/products'
-      preLoaderRoute: typeof AdminProductsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/products'
+      preLoaderRoute: typeof BackendProductsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/pages': {
-      id: '/admin/pages'
+    '/backend/pages': {
+      id: '/backend/pages'
       path: '/pages'
-      fullPath: '/admin/pages'
-      preLoaderRoute: typeof AdminPagesRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/pages'
+      preLoaderRoute: typeof BackendPagesRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/orders': {
-      id: '/admin/orders'
+    '/backend/orders': {
+      id: '/backend/orders'
       path: '/orders'
-      fullPath: '/admin/orders'
-      preLoaderRoute: typeof AdminOrdersRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/orders'
+      preLoaderRoute: typeof BackendOrdersRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/newsletter': {
-      id: '/admin/newsletter'
+    '/backend/newsletter': {
+      id: '/backend/newsletter'
       path: '/newsletter'
-      fullPath: '/admin/newsletter'
-      preLoaderRoute: typeof AdminNewsletterRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/newsletter'
+      preLoaderRoute: typeof BackendNewsletterRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/nav-links': {
-      id: '/admin/nav-links'
+    '/backend/nav-links': {
+      id: '/backend/nav-links'
       path: '/nav-links'
-      fullPath: '/admin/nav-links'
-      preLoaderRoute: typeof AdminNavLinksRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/nav-links'
+      preLoaderRoute: typeof BackendNavLinksRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/media': {
-      id: '/admin/media'
+    '/backend/media': {
+      id: '/backend/media'
       path: '/media'
-      fullPath: '/admin/media'
-      preLoaderRoute: typeof AdminMediaRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/media'
+      preLoaderRoute: typeof BackendMediaRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/login': {
-      id: '/admin/login'
+    '/backend/login': {
+      id: '/backend/login'
       path: '/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/login'
+      preLoaderRoute: typeof BackendLoginRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/lifestyle-cards': {
-      id: '/admin/lifestyle-cards'
+    '/backend/lifestyle-cards': {
+      id: '/backend/lifestyle-cards'
       path: '/lifestyle-cards'
-      fullPath: '/admin/lifestyle-cards'
-      preLoaderRoute: typeof AdminLifestyleCardsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/lifestyle-cards'
+      preLoaderRoute: typeof BackendLifestyleCardsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/integrations': {
-      id: '/admin/integrations'
+    '/backend/integrations': {
+      id: '/backend/integrations'
       path: '/integrations'
-      fullPath: '/admin/integrations'
-      preLoaderRoute: typeof AdminIntegrationsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/integrations'
+      preLoaderRoute: typeof BackendIntegrationsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/homepage-sections': {
-      id: '/admin/homepage-sections'
+    '/backend/homepage-sections': {
+      id: '/backend/homepage-sections'
       path: '/homepage-sections'
-      fullPath: '/admin/homepage-sections'
-      preLoaderRoute: typeof AdminHomepageSectionsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/homepage-sections'
+      preLoaderRoute: typeof BackendHomepageSectionsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/homepage': {
-      id: '/admin/homepage'
+    '/backend/homepage': {
+      id: '/backend/homepage'
       path: '/homepage'
-      fullPath: '/admin/homepage'
-      preLoaderRoute: typeof AdminHomepageRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/homepage'
+      preLoaderRoute: typeof BackendHomepageRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/hero-slides': {
-      id: '/admin/hero-slides'
+    '/backend/hero-slides': {
+      id: '/backend/hero-slides'
       path: '/hero-slides'
-      fullPath: '/admin/hero-slides'
-      preLoaderRoute: typeof AdminHeroSlidesRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/hero-slides'
+      preLoaderRoute: typeof BackendHeroSlidesRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/feature-cards': {
-      id: '/admin/feature-cards'
+    '/backend/feature-cards': {
+      id: '/backend/feature-cards'
       path: '/feature-cards'
-      fullPath: '/admin/feature-cards'
-      preLoaderRoute: typeof AdminFeatureCardsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/feature-cards'
+      preLoaderRoute: typeof BackendFeatureCardsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/email-templates': {
-      id: '/admin/email-templates'
+    '/backend/email-templates': {
+      id: '/backend/email-templates'
       path: '/email-templates'
-      fullPath: '/admin/email-templates'
-      preLoaderRoute: typeof AdminEmailTemplatesRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/email-templates'
+      preLoaderRoute: typeof BackendEmailTemplatesRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/data-transfer': {
-      id: '/admin/data-transfer'
+    '/backend/data-transfer': {
+      id: '/backend/data-transfer'
       path: '/data-transfer'
-      fullPath: '/admin/data-transfer'
-      preLoaderRoute: typeof AdminDataTransferRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/data-transfer'
+      preLoaderRoute: typeof BackendDataTransferRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/content': {
-      id: '/admin/content'
+    '/backend/content': {
+      id: '/backend/content'
       path: '/content'
-      fullPath: '/admin/content'
-      preLoaderRoute: typeof AdminContentRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/content'
+      preLoaderRoute: typeof BackendContentRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/communications': {
-      id: '/admin/communications'
+    '/backend/communications': {
+      id: '/backend/communications'
       path: '/communications'
-      fullPath: '/admin/communications'
-      preLoaderRoute: typeof AdminCommunicationsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/communications'
+      preLoaderRoute: typeof BackendCommunicationsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/commerce': {
-      id: '/admin/commerce'
+    '/backend/commerce': {
+      id: '/backend/commerce'
       path: '/commerce'
-      fullPath: '/admin/commerce'
-      preLoaderRoute: typeof AdminCommerceRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/commerce'
+      preLoaderRoute: typeof BackendCommerceRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/collections': {
-      id: '/admin/collections'
+    '/backend/collections': {
+      id: '/backend/collections'
       path: '/collections'
-      fullPath: '/admin/collections'
-      preLoaderRoute: typeof AdminCollectionsRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/collections'
+      preLoaderRoute: typeof BackendCollectionsRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/checkout': {
-      id: '/admin/checkout'
+    '/backend/checkout': {
+      id: '/backend/checkout'
       path: '/checkout'
-      fullPath: '/admin/checkout'
-      preLoaderRoute: typeof AdminCheckoutRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/checkout'
+      preLoaderRoute: typeof BackendCheckoutRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/categories': {
-      id: '/admin/categories'
+    '/backend/categories': {
+      id: '/backend/categories'
       path: '/categories'
-      fullPath: '/admin/categories'
-      preLoaderRoute: typeof AdminCategoriesRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/backend/categories'
+      preLoaderRoute: typeof BackendCategoriesRouteImport
+      parentRoute: typeof BackendRouteRoute
     }
-    '/admin/catalog': {
-      id: '/admin/catalog'
+    '/backend/catalog': {
+      id: '/backend/catalog'
       path: '/catalog'
-      fullPath: '/admin/catalog'
-      preLoaderRoute: typeof AdminCatalogRouteImport
+      fullPath: '/backend/catalog'
+      preLoaderRoute: typeof BackendCatalogRouteImport
+      parentRoute: typeof BackendRouteRoute
+    }
+    '/admin/$': {
+      id: '/admin/$'
+      path: '/$'
+      fullPath: '/admin/$'
+      preLoaderRoute: typeof AdminSplatRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/account/orders/$orderId': {
@@ -805,67 +861,81 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
-  AdminCatalogRoute: typeof AdminCatalogRoute
-  AdminCategoriesRoute: typeof AdminCategoriesRoute
-  AdminCheckoutRoute: typeof AdminCheckoutRoute
-  AdminCollectionsRoute: typeof AdminCollectionsRoute
-  AdminCommerceRoute: typeof AdminCommerceRoute
-  AdminCommunicationsRoute: typeof AdminCommunicationsRoute
-  AdminContentRoute: typeof AdminContentRoute
-  AdminDataTransferRoute: typeof AdminDataTransferRoute
-  AdminEmailTemplatesRoute: typeof AdminEmailTemplatesRoute
-  AdminFeatureCardsRoute: typeof AdminFeatureCardsRoute
-  AdminHeroSlidesRoute: typeof AdminHeroSlidesRoute
-  AdminHomepageRoute: typeof AdminHomepageRoute
-  AdminHomepageSectionsRoute: typeof AdminHomepageSectionsRoute
-  AdminIntegrationsRoute: typeof AdminIntegrationsRoute
-  AdminLifestyleCardsRoute: typeof AdminLifestyleCardsRoute
-  AdminLoginRoute: typeof AdminLoginRoute
-  AdminMediaRoute: typeof AdminMediaRoute
-  AdminNavLinksRoute: typeof AdminNavLinksRoute
-  AdminNewsletterRoute: typeof AdminNewsletterRoute
-  AdminOrdersRoute: typeof AdminOrdersRoute
-  AdminPagesRoute: typeof AdminPagesRoute
-  AdminProductsRoute: typeof AdminProductsRoute
-  AdminSettingsRoute: typeof AdminSettingsRoute
-  AdminSiteSettingsRoute: typeof AdminSiteSettingsRoute
-  AdminSubmissionsRoute: typeof AdminSubmissionsRoute
-  AdminUsersRoute: typeof AdminUsersRoute
+  AdminSplatRoute: typeof AdminSplatRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
-  AdminCatalogRoute: AdminCatalogRoute,
-  AdminCategoriesRoute: AdminCategoriesRoute,
-  AdminCheckoutRoute: AdminCheckoutRoute,
-  AdminCollectionsRoute: AdminCollectionsRoute,
-  AdminCommerceRoute: AdminCommerceRoute,
-  AdminCommunicationsRoute: AdminCommunicationsRoute,
-  AdminContentRoute: AdminContentRoute,
-  AdminDataTransferRoute: AdminDataTransferRoute,
-  AdminEmailTemplatesRoute: AdminEmailTemplatesRoute,
-  AdminFeatureCardsRoute: AdminFeatureCardsRoute,
-  AdminHeroSlidesRoute: AdminHeroSlidesRoute,
-  AdminHomepageRoute: AdminHomepageRoute,
-  AdminHomepageSectionsRoute: AdminHomepageSectionsRoute,
-  AdminIntegrationsRoute: AdminIntegrationsRoute,
-  AdminLifestyleCardsRoute: AdminLifestyleCardsRoute,
-  AdminLoginRoute: AdminLoginRoute,
-  AdminMediaRoute: AdminMediaRoute,
-  AdminNavLinksRoute: AdminNavLinksRoute,
-  AdminNewsletterRoute: AdminNewsletterRoute,
-  AdminOrdersRoute: AdminOrdersRoute,
-  AdminPagesRoute: AdminPagesRoute,
-  AdminProductsRoute: AdminProductsRoute,
-  AdminSettingsRoute: AdminSettingsRoute,
-  AdminSiteSettingsRoute: AdminSiteSettingsRoute,
-  AdminSubmissionsRoute: AdminSubmissionsRoute,
-  AdminUsersRoute: AdminUsersRoute,
+  AdminSplatRoute: AdminSplatRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
+)
+
+interface BackendRouteRouteChildren {
+  BackendCatalogRoute: typeof BackendCatalogRoute
+  BackendCategoriesRoute: typeof BackendCategoriesRoute
+  BackendCheckoutRoute: typeof BackendCheckoutRoute
+  BackendCollectionsRoute: typeof BackendCollectionsRoute
+  BackendCommerceRoute: typeof BackendCommerceRoute
+  BackendCommunicationsRoute: typeof BackendCommunicationsRoute
+  BackendContentRoute: typeof BackendContentRoute
+  BackendDataTransferRoute: typeof BackendDataTransferRoute
+  BackendEmailTemplatesRoute: typeof BackendEmailTemplatesRoute
+  BackendFeatureCardsRoute: typeof BackendFeatureCardsRoute
+  BackendHeroSlidesRoute: typeof BackendHeroSlidesRoute
+  BackendHomepageRoute: typeof BackendHomepageRoute
+  BackendHomepageSectionsRoute: typeof BackendHomepageSectionsRoute
+  BackendIntegrationsRoute: typeof BackendIntegrationsRoute
+  BackendLifestyleCardsRoute: typeof BackendLifestyleCardsRoute
+  BackendLoginRoute: typeof BackendLoginRoute
+  BackendMediaRoute: typeof BackendMediaRoute
+  BackendNavLinksRoute: typeof BackendNavLinksRoute
+  BackendNewsletterRoute: typeof BackendNewsletterRoute
+  BackendOrdersRoute: typeof BackendOrdersRoute
+  BackendPagesRoute: typeof BackendPagesRoute
+  BackendProductsRoute: typeof BackendProductsRoute
+  BackendSettingsRoute: typeof BackendSettingsRoute
+  BackendSiteSettingsRoute: typeof BackendSiteSettingsRoute
+  BackendSubmissionsRoute: typeof BackendSubmissionsRoute
+  BackendUsersRoute: typeof BackendUsersRoute
+  BackendIndexRoute: typeof BackendIndexRoute
+}
+
+const BackendRouteRouteChildren: BackendRouteRouteChildren = {
+  BackendCatalogRoute: BackendCatalogRoute,
+  BackendCategoriesRoute: BackendCategoriesRoute,
+  BackendCheckoutRoute: BackendCheckoutRoute,
+  BackendCollectionsRoute: BackendCollectionsRoute,
+  BackendCommerceRoute: BackendCommerceRoute,
+  BackendCommunicationsRoute: BackendCommunicationsRoute,
+  BackendContentRoute: BackendContentRoute,
+  BackendDataTransferRoute: BackendDataTransferRoute,
+  BackendEmailTemplatesRoute: BackendEmailTemplatesRoute,
+  BackendFeatureCardsRoute: BackendFeatureCardsRoute,
+  BackendHeroSlidesRoute: BackendHeroSlidesRoute,
+  BackendHomepageRoute: BackendHomepageRoute,
+  BackendHomepageSectionsRoute: BackendHomepageSectionsRoute,
+  BackendIntegrationsRoute: BackendIntegrationsRoute,
+  BackendLifestyleCardsRoute: BackendLifestyleCardsRoute,
+  BackendLoginRoute: BackendLoginRoute,
+  BackendMediaRoute: BackendMediaRoute,
+  BackendNavLinksRoute: BackendNavLinksRoute,
+  BackendNewsletterRoute: BackendNewsletterRoute,
+  BackendOrdersRoute: BackendOrdersRoute,
+  BackendPagesRoute: BackendPagesRoute,
+  BackendProductsRoute: BackendProductsRoute,
+  BackendSettingsRoute: BackendSettingsRoute,
+  BackendSiteSettingsRoute: BackendSiteSettingsRoute,
+  BackendSubmissionsRoute: BackendSubmissionsRoute,
+  BackendUsersRoute: BackendUsersRoute,
+  BackendIndexRoute: BackendIndexRoute,
+}
+
+const BackendRouteRouteWithChildren = BackendRouteRoute._addFileChildren(
+  BackendRouteRouteChildren,
 )
 
 interface AccountRouteChildren {
@@ -894,6 +964,7 @@ const CheckoutRouteWithChildren = CheckoutRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  BackendRouteRoute: BackendRouteRouteWithChildren,
   AccountRoute: AccountRouteWithChildren,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRouteWithChildren,

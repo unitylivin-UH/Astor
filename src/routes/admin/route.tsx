@@ -1,12 +1,9 @@
-import { createFileRoute, Outlet, useRouterState } from '@tanstack/react-router'
-import { AdminLayout } from '@/admin/AdminLayout'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/admin')({
-  component: AdminRouteWrapper,
+  beforeLoad: ({ location }) => {
+    if (location.pathname === '/admin') {
+      throw redirect({ to: '/' })
+    }
+  },
 })
-
-function AdminRouteWrapper() {
-  const pathname = useRouterState({ select: (s) => s.location.pathname })
-  if (pathname === '/admin/login') return <Outlet />
-  return <AdminLayout />
-}

@@ -4,7 +4,7 @@ import { createTabSearchSchema } from '@/admin/lib/adminTabSearch'
 
 const homepageSearchSchema = createTabSearchSchema(HOMEPAGE_TABS, HOMEPAGE_DEFAULT_TAB)
 
-export const Route = createFileRoute('/admin/homepage')({
+export const Route = createFileRoute('/backend/homepage')({
   validateSearch: homepageSearchSchema,
   component: HomepagePage,
 })

@@ -20,7 +20,7 @@ export function AdminCatalogHub({ tab }: { tab: TabId }) {
     <AdminTabHub
       title="Catalog"
       subtitle="Manage products, bundles, collections, and categories."
-      hubPath="/admin/catalog"
+      hubPath="/backend/catalog"
       tabs={[...TABS]}
       activeTab={tab}
     />

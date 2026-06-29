@@ -18,7 +18,7 @@ export function AdminHomepageHub({ tab }: { tab: TabId }) {
     <AdminTabHub
       title="Homepage"
       subtitle="Configure hero, features, lifestyle cards, and content sections."
-      hubPath="/admin/homepage"
+      hubPath="/backend/homepage"
       tabs={[...TABS]}
       activeTab={tab}
     />

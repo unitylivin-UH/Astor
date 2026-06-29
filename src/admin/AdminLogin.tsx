@@ -15,7 +15,7 @@ export function AdminLogin() {
   const [error, setError] = useState<string | null>(null)
 
   if (!loading && session && isAdmin) {
-    return <Navigate to="/admin" />
+    return <Navigate to="/backend" />
   }
 
   if (!isSupabaseConfigured()) {

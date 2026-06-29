@@ -18,17 +18,17 @@ import { useAdminAuth } from '@/contexts/AdminAuthContext'
 import { adminNavLink, adminNavLinkActive, adminSidebarSignOut } from '@/admin/adminClassNames'
 
 const NAV_ITEMS: { label: string; to: string; icon: LucideIcon; exact?: boolean }[] = [
-  { label: 'Dashboard', to: '/admin', icon: LayoutDashboard, exact: true },
-  { label: 'Catalog', to: '/admin/catalog', icon: Package },
-  { label: 'Homepage', to: '/admin/homepage', icon: Sparkles },
-  { label: 'Site Content', to: '/admin/content', icon: FileText },
-  { label: 'Commerce', to: '/admin/commerce', icon: ShoppingBag },
-  { label: 'Communications', to: '/admin/communications', icon: MessageSquare },
-  { label: 'Settings', to: '/admin/settings', icon: Settings },
+  { label: 'Dashboard', to: '/backend', icon: LayoutDashboard, exact: true },
+  { label: 'Catalog', to: '/backend/catalog', icon: Package },
+  { label: 'Homepage', to: '/backend/homepage', icon: Sparkles },
+  { label: 'Site Content', to: '/backend/content', icon: FileText },
+  { label: 'Commerce', to: '/backend/commerce', icon: ShoppingBag },
+  { label: 'Communications', to: '/backend/communications', icon: MessageSquare },
+  { label: 'Settings', to: '/backend/settings', icon: Settings },
 ]
 
 function isPathActive(pathname: string, to: string, exact?: boolean) {
-  if (exact) return pathname === to
+  if (exact) return pathname === to || pathname === `${to}/`
   return pathname === to || pathname.startsWith(`${to}/`)
 }
 

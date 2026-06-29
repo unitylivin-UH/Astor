@@ -4,7 +4,7 @@ import { createTabSearchSchema } from '@/admin/lib/adminTabSearch'
 
 const settingsSearchSchema = createTabSearchSchema(SETTINGS_TABS, SETTINGS_DEFAULT_TAB)
 
-export const Route = createFileRoute('/admin/settings')({
+export const Route = createFileRoute('/backend/settings')({
   validateSearch: settingsSearchSchema,
   component: SettingsPage,
 })

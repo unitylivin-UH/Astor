@@ -1,10 +1,13 @@
 import { useEffect } from 'react'
 import { useCms } from '@/contexts/CmsContext'
 
+export const DEFAULT_FAVICON_URL = '/images/favicon%20astor.png'
+export const DEFAULT_LOGO_DARK_URL = '/images/ASTOR%20logo.png'
+
 export function getBrandSettings(siteSettings: Record<string, string>) {
   return {
-    faviconUrl: siteSettings.favicon_url?.trim() ?? '',
-    logoDarkUrl: siteSettings.logo_dark_url?.trim() ?? '',
+    faviconUrl: siteSettings.favicon_url?.trim() || DEFAULT_FAVICON_URL,
+    logoDarkUrl: siteSettings.logo_dark_url?.trim() || DEFAULT_LOGO_DARK_URL,
     logoLightUrl: siteSettings.logo_light_url?.trim() ?? '',
     heroBgDesktop: siteSettings.hero_bg_desktop?.trim() ?? '',
     heroBgTablet: siteSettings.hero_bg_tablet?.trim() ?? '',
@@ -28,7 +31,6 @@ export function SiteFavicon() {
   const faviconUrl = getBrandSettings(snapshot.siteSettings).faviconUrl
 
   useEffect(() => {
-    if (!faviconUrl) return
     let link = document.querySelector<HTMLLinkElement>("link[rel='icon']")
     if (!link) {
       link = document.createElement('link')

@@ -27,7 +27,7 @@ export function SiteHeader() {
     <>
       <header className="site-header pointer-events-auto absolute inset-x-0 top-0 z-30 px-6 py-5 text-cream-text md:px-14">
         <div className="flex items-center justify-between gap-4">
-          <SiteLogo variant="dark" className="text-white" />
+          <SiteLogo variant="dark" className="text-white" imageClassName="h-7 max-w-[130px] lg:h-10 lg:max-w-[200px]" />
 
           <nav className="hidden items-center gap-6 lg:flex">
             <Link to="/" className={navLinkClass}>

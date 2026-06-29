@@ -18,7 +18,7 @@ export function AdminContentHub({ tab }: { tab: TabId }) {
     <AdminTabHub
       title="Site Content"
       subtitle="Pages, navigation, social links, and media library."
-      hubPath="/admin/content"
+      hubPath="/backend/content"
       tabs={[...TABS]}
       activeTab={tab}
     />

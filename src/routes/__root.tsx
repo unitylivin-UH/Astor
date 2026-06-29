@@ -20,7 +20,7 @@ import { CookieConsentBanner } from '@/components/legal/CookieConsentBanner'
 import { CookieConsentProvider } from '@/contexts/CookieConsentContext'
 import { StorefrontAuthProvider } from '@/contexts/StorefrontAuthContext'
 import { GoogleTagManager } from '@/components/analytics/GoogleTagManager'
-import { SiteFavicon } from '@/lib/siteBrand'
+import { DEFAULT_FAVICON_URL, SiteFavicon } from '@/lib/siteBrand'
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -32,6 +32,7 @@ export const Route = createRootRoute({
       { title: 'Astor Electronics' },
     ],
     links: [
+      { rel: 'icon', href: DEFAULT_FAVICON_URL, type: 'image/png' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
       {
@@ -45,7 +46,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
-  const isAdmin = pathname.startsWith('/admin')
+  const isAdmin = pathname.startsWith('/backend')
   const [queryClient] = useState(() => new QueryClient())
 
   return (

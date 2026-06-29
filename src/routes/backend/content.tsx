@@ -4,7 +4,7 @@ import { createTabSearchSchema } from '@/admin/lib/adminTabSearch'
 
 const contentSearchSchema = createTabSearchSchema(CONTENT_TABS, CONTENT_DEFAULT_TAB)
 
-export const Route = createFileRoute('/admin/content')({
+export const Route = createFileRoute('/backend/content')({
   validateSearch: contentSearchSchema,
   component: ContentPage,
 })

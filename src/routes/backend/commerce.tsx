@@ -4,7 +4,7 @@ import { createTabSearchSchema } from '@/admin/lib/adminTabSearch'
 
 const commerceSearchSchema = createTabSearchSchema(COMMERCE_TABS, COMMERCE_DEFAULT_TAB)
 
-export const Route = createFileRoute('/admin/commerce')({
+export const Route = createFileRoute('/backend/commerce')({
   validateSearch: commerceSearchSchema,
   component: CommercePage,
 })

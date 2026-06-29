@@ -30,7 +30,7 @@ export function AdminLayout() {
   }
 
   if (!session || !isAdmin) {
-    return <Navigate to="/admin/login" />
+    return <Navigate to="/backend/login" />
   }
 
   return (

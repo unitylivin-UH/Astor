@@ -16,7 +16,7 @@ export function AdminCommunicationsHub({ tab }: { tab: TabId }) {
     <AdminTabHub
       title="Communications"
       subtitle="Email templates, newsletter subscribers, and form submissions."
-      hubPath="/admin/communications"
+      hubPath="/backend/communications"
       tabs={[...TABS]}
       activeTab={tab}
     />

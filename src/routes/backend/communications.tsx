@@ -8,7 +8,7 @@ import { createTabSearchSchema } from '@/admin/lib/adminTabSearch'
 
 const communicationsSearchSchema = createTabSearchSchema(COMMUNICATIONS_TABS, COMMUNICATIONS_DEFAULT_TAB)
 
-export const Route = createFileRoute('/admin/communications')({
+export const Route = createFileRoute('/backend/communications')({
   validateSearch: communicationsSearchSchema,
   component: CommunicationsPage,
 })

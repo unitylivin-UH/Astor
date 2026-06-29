@@ -60,7 +60,7 @@ export function MobileMenuDrawer({ open, onClose }: MobileMenuDrawerProps) {
       aria-label="Navigation menu"
     >
       <div className="flex shrink-0 items-center justify-between bg-hero-brown px-6 py-5 text-cream-text md:px-8">
-        <SiteLogo variant="dark" className="text-white" onNavigate={onClose} />
+        <SiteLogo variant="dark" className="text-white" imageClassName="h-10 max-w-[200px]" onNavigate={onClose} />
         <button
           type="button"
           aria-label="Close menu"
